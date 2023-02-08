@@ -1,8 +1,17 @@
+FROM alpine:edge as socks_proxy
+RUN apk add --no-cache --update git build-base
+RUN git clone https://github.com/Fuwn/socks_proxy.git && \
+    cd socks_proxy && \
+    make && \
+    mv proxy /usr/local/bin/socks_proxy
+
 FROM alpine:edge
 
 EXPOSE 8080
 
-RUN apk --update add privoxy openvpn runit
+RUN apk --update add openvpn runit
+
+COPY --from=socks_proxy /usr/local/bin/socks_proxy /usr/local/bin/
 
 COPY app /app
 

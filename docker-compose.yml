@@ -1,8 +1,8 @@
 version: "3"
 services:
   ovpn_proxy:
-    image: andymeful/privoxy-openvpn
-    #build: .
+    image: akirill0v/privoxy-socks5-openvpn
+    build: .
     cap_add:
       - NET_ADMIN
     devices:
@@ -17,6 +17,9 @@ services:
       - OPENVPN_FILENAME=uk-london-aes128.ovpn
       - LOCAL_NETWORK=192.168.1.0/24
       - ONLINECHECK_DELAY=900
+      - SOCKS_AUTHTYPE=2
+      - SOCKS_USERNAME=proxy
+      - SOCKS_PASSWORD=test123
     ports:
-      - 8080:8080
+      - 8080:1080
     restart: always

@@ -2,20 +2,12 @@
 A Privoxy container with OpenVPN  
 Built on Alpine Linux so tiny, fast, light and awesome.
 
+... Refactored to use https://github.com/Fuwn/socks_proxy as Socks5 proxy with authentication
+
 ## Setup
 
 ### Docker
 
-```
-docker run -d --device=/dev/net/tun --cap-add=NET_ADMIN \
-	--dns=1.1.1.1 --dns=1.0.0.1 \
-    -e "OPENVPN_FILENAME=uk-london-aes128.ovpn" \
-    -e "LOCAL_NETWORK=192.168.1.0/24" \
-    -e "ONLINECHECK_DELAY=900" \
-    -v ./openvpn-config:/app/ovpn/config \
-    -p 8080:8080 \
-    andymeful/privoxy-openvpn
-```
 `docker-compose.yml` has been included in the repository for reference.  
 
 ### Volume
@@ -27,6 +19,13 @@ I've tested with PIAs ovpn configs but will probably work with any, just make su
 ```
 auth-user-pass /app/ovpn/config/credentials.txt
 ```
+or
+
+```
+askpass /app/ovpn/config/passphrase.txt
+```
+for passphrase
+
 I plan to check for / automagically add this line in future.
 
 I left in PIA London config for use if needed.  
